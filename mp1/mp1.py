@@ -131,3 +131,24 @@ def generate_test_set_regression():
     np.random.seed(42)
     [X_test, Y_test] = generate_dataset_regression(300, 20)
     return [X_test, Y_test]
+
+
+def generate_dataset_denoising(nb_samples):
+    # Getting im_size:
+    im_size = generate_a_rectangle().shape[0]
+    X = np.zeros([nb_samples, im_size])
+    Y = np.zeros([nb_samples, im_size])
+    print('Creating data:')
+    for i in range(nb_samples):
+        category = np.random.randint(3)
+        if category == 0:
+            X[i] = generate_a_rectangle(free_location=True)
+        elif category == 1:
+            X[i] = generate_a_disk(free_location=True)
+        else:
+            [X[i], V] = generate_a_triangle(free_location=True)
+
+        noise = np.random.rand() * 50
+        noisy = (X[i] + np.random.normal(scale=noise, size=X[i].shape))
+        Y[i] = 255 * (noisy - noisy.min()) / (noisy.max() - noisy.min())
+    return [X, Y]
