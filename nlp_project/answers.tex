@@ -67,6 +67,19 @@ $$
 
 \subsection*{Question}
 
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|c|}
+  \hline
+  \textbf{Model}                   & \textbf{Training accuracy} & \textbf{Dev accuracy} \\
+  \hline
+  Average of word vectors          & \textbf{0.498}             & \textbf{0.441} \\
+  Weighted-average of word vectors & 0.483                      & \textbf{0.441} \\
+  \hline
+  \end{tabular}
+  \caption{Performance of logistic regression for sentence classification with BoV}
+\end{table}
+
 \section{Deep Learning models for classification}
 
 \subsection*{Question 1}
@@ -85,11 +98,42 @@ where $N$ is the number of examples, $C$ is the number of classes, $y_i$ is the 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{learning_curve.png}
+  \includegraphics[width=0.48\textwidth]{learning_curve.png}
+  \includegraphics[width=0.48\textwidth]{learning_curve_accuracy.png}
   \caption{Evolution of train/dev results w.r.t the number of epochs.}
 \end{figure}
 
+We observe that the model overfits a lot. It's not completely surprising, considering there are 185 157 trainable parameters for 8 544 examples.
+
 \subsection*{Question 3}
 
+My architecture looks like this:
+% Embedding(
+%     input_dim=w2v.embeddings.shape[0],
+%     output_dim=w2v.embeddings.shape[1],
+%     weights=[w2v.embeddings],
+%     trainable=False,
+% ),
+% Dropout(0.3),
+% Conv1D(32, 5, activation='relu'),
+% MaxPooling1D(4),
+% LSTM(64, dropout=0.2, recurrent_dropout=0.2),
+% Dense(n_classes, activation='softmax'),
+\begin{enumerate}
+  \item A pre-trained Embedding layer, with frozen weights
+  \item A 1D convolution with 32 kernels of size 5, followed by a ReLU activation.
+  \item A 1D max-pooling layer of size 4.
+  \item A LSTM layer with 64 units.
+  \item A final dense softmax layer.
+\end{enumerate}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.48\textwidth]{learning_curve_innovate.png}
+  \includegraphics[width=0.48\textwidth]{learning_curve_accuracy_innovate.png}
+  \caption{Evolution of train/dev results w.r.t the number of epochs.}
+\end{figure}
+
+As we can see,
 
 \end{document}
