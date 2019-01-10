@@ -74,7 +74,7 @@ $$
   \textbf{Model}                   & \textbf{Training accuracy} & \textbf{Dev accuracy} \\
   \hline
   Average of word vectors          & \textbf{0.498}             & \textbf{0.441} \\
-  Weighted-average of word vectors & 0.483                      & \textbf{0.441} \\
+  Weighted-average of word vectors & 0.483                      & 0.436          \\
   \hline
   \end{tabular}
   \caption{Performance of logistic regression for sentence classification with BoV}
@@ -134,6 +134,8 @@ My architecture looks like this:
   \caption{Evolution of train/dev results w.r.t the number of epochs.}
 \end{figure}
 
-As we can see,
+As we can see, the model overfits a lot less than before. That's because we froze the weights of the Embedding layer, which can overfit quite easily.
+
+Moreover, we slightly improved the accuracy, increasing from 37\% to 47\%.
 
 \end{document}
